@@ -1,0 +1,104 @@
+{{define "webpage"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>n-Queens</title>
+    <link rel="stylesheet" href="/web/mdl/material.min.css" /> 
+    <link rel="stylesheet" href="/web/mdl/portfolio.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+
+  <body>
+<!-- Simple header with fixed tabs. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+            mdl-layout--fixed-tabs">
+  <header class="mdl-layout__header portfolio-header">
+    <div class="mdl-layout__header-row portfolio-logo-row">
+      <!-- Title -->
+      <span class="mdl-layout__title">
+        <div class="portfolio-logo"></div>
+      </span>
+    </div>
+  </header>
+
+  <main class="mdl-layout__content">
+    <section class="mdl-layout">
+      <div class="mdl-grid portfolio-max-width">
+        <!-- Our content will go here. -->
+        {{template "content"}}
+      </div>
+    </section>
+  </main>
+</div>
+
+    <!-- jquery & Bootstrap JS -->
+    <script defer src="/web/mdl/material.min.js"></script>
+  </body>
+</html>
+{{end}}
+
+{{define "content"}}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--1-col">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" disabled>
+      <i class="material-icons">arrow_left</i>
+    </button>
+  </div>
+  <div class="mdl-cell mdl-cell--10-col mdl-cell--stretch">
+    <canvas id="cboard" width="800px" height="800px" style="border:2px solid #d3d3d3;"></canvas>
+  </div>
+  <div class="mdl-cell mdl-cell--1-col">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+      <i class="material-icons">arrow_right</i>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript">
+var c=document.getElementById("cboard");
+var ctx=c.getContext("2d");
+
+// Make it visually fill the positioned parent
+c.style.width ='100%';
+c.style.height='100%';
+// ...then set the internal size to match
+cw = c.offsetWidth;
+ch = c.offsetWidth;
+c.width  = cw;
+c.height = ch;
+
+sw = cw / 8;
+sh = cw / 8;
+for(i=0;i<8;i++)
+{for(j=0;j<8;j++)
+{ctx.moveTo(0,sh*j);
+ctx.lineTo(ch,sh*j);
+ctx.stroke();
+
+ctx.moveTo(sh*i,0);
+ctx.lineTo(sh*i,ch);
+ctx.stroke();
+var left = 0;
+for(var a=0;a<8;a++) {
+    for(var b=0; b<8;b+=2) {
+      startX = b * sw;
+      if(a%2==0) startX = (b+1) * sw;
+      ctx.fillRect(startX + left,(a*sw) ,sw,sw);
+	}}
+}} 
+
+function getMousePosition(canvas, event) { 
+  let rect = canvas.getBoundingClientRect(); 
+  let x = event.clientX - rect.left; 
+  let y = event.clientY - rect.top; 
+  console.log("Coordinate x: " + x,  
+              "Coordinate y: " + y); 
+  console.log("Box m: " + Math.floor(y/sw),
+              "Box n: " + Math.floor(x/sh));
+} 
+      
+c.addEventListener("mousedown", function(e) { 
+  getMousePosition(c, e); 
+}); 
+</script>
+{{end}}
