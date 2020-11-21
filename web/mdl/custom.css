@@ -81,3 +81,12 @@
     background-color: rgb(255,64,129);
     left: 15%;
   }
+
+
+  .mdl-textfield{
+    width:150px;
+  }
+
+  #instructions{
+    color: #777;
+  }

@@ -1,0 +1,60 @@
+{{define "content"}}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-card mdl-shadow--4dp">
+    <div class="mdl-card__media"><img src="/web/img/g1.png" width="300" height="100" border="0"
+    alt="" style="padding:10px;">
+    </div>
+    <div class="mdl-card__supporting-text">
+        8-Queens
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a href="eight_setup" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="float: right;">
+        Next
+        </a>
+    </div>
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-card mdl-shadow--4dp">
+    <div class="mdl-card__media"><img src="/web/img/g2.png" width="300" height="100" border="0"
+    alt="" style="padding:10px;">
+    </div>
+    <div class="mdl-card__supporting-text">
+        12-Queens
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="float: right;">
+        Next
+        </a>
+    </div>
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-card mdl-shadow--4dp">
+    <div class="mdl-card__media"><img src="/web/img/g3.png" width="300" height="100" border="0"
+    alt="" style="padding:10px;">
+    </div>
+    <div class="mdl-card__supporting-text">
+        16-Queens
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="float: right;">
+        Next
+        </a>
+    </div>
+    </div>
+  </div>
+</div>
+{{end}}
+
+{{define "navscript"}}
+<script type="text/javascript">
+document.getElementById("homea").classList.add("is-active");
+document.getElementById("eighta").classList.remove("is-active");
+document.getElementById("twelvea").classList.remove("is-active");
+document.getElementById("sixteena").classList.remove("is-active");
+</script>
+{{end}}

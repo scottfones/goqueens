@@ -1,0 +1,73 @@
+{{define "content"}}
+<form action="eight_display" method="post" id="config8">
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--10-col">
+  <h3>Set Queen Restrictions:</h3>
+  <p id="instructions">Leave empty to omit restrictions.</p>
+</div>
+
+<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--4-col">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq1" id="setq1">
+    <label class="mdl-textfield__label" for="setq1">Queen 1 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq2" id="setq2">
+    <label class="mdl-textfield__label" for="setq1">Queen 2 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq3" id="setq3">
+    <label class="mdl-textfield__label" for="setq1">Queen 3 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq4" id="setq4">
+    <label class="mdl-textfield__label" for="setq1">Queen 4 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+</div>
+
+<div class="mdl-cell mdl-cell--middle mdl-cell--1-offset mdl-cell--4-col">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq5" id="setq5">
+    <label class="mdl-textfield__label" for="setq1">Queen 5 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq6" id="setq6">
+    <label class="mdl-textfield__label" for="setq1">Queen 6 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq7" id="setq7">
+    <label class="mdl-textfield__label" for="setq1">Queen 7 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq8" id="setq8">
+    <label class="mdl-textfield__label" for="setq1">Queen 8 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
+  </div> 
+</div>
+
+<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--8-col">
+  <button type="submit" form="config8" style="float:right;" 
+          class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+    Submit
+  </button>
+</div>
+
+</div>
+</form>
+{{end}}
+
+{{define "navscript"}}
+<script type="text/javascript">
+document.getElementById("homea").classList.remove("is-active");
+document.getElementById("eighta").classList.add("is-active");
+document.getElementById("twelvea").classList.remove("is-active");
+document.getElementById("sixteena").classList.remove("is-active");
+</script>
+{{end}}
