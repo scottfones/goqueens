@@ -1,72 +1,92 @@
 {{define "content"}}
 <div class="mdl-grid">
 <div class="mdl-cell mdl-cell--6-col">
-<form action="twelve_display" method="post" id="config12">
+<form action="sixteen_display" method="post" id="config16">
   <h3>Set Queen Restrictions:</h3>
   <p id="instructions">Leave empty to omit restrictions.</p>
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq1" id="setq1" oninput="drawRow(0,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq1" id="setq1" oninput="drawRow(0,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 1 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq2" id="setq2" oninput="drawRow(1,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq2" id="setq2" oninput="drawRow(1,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 2 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq3" id="setq3" oninput="drawRow(2,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq3" id="setq3" oninput="drawRow(2,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 3 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq4" id="setq4" oninput="drawRow(3,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq4" id="setq4" oninput="drawRow(3,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 4 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq5" id="setq5" oninput="drawRow(4,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq5" id="setq5" oninput="drawRow(4,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 5 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq6" id="setq6" oninput="drawRow(5,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq6" id="setq6" oninput="drawRow(5,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 6 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq7" id="setq7" oninput="drawRow(6,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq7" id="setq7" oninput="drawRow(6,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 7 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq8" id="setq8" oninput="drawRow(7,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq8" id="setq8" oninput="drawRow(7,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 8 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div> 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq9" id="setq9" oninput="drawRow(8,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq9" id="setq9" oninput="drawRow(8,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 9 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div> 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq10" id="setq10" oninput="drawRow(9,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq10" id="setq10" oninput="drawRow(9,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 10 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div> 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq11" id="setq11" oninput="drawRow(10,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq11" id="setq11" oninput="drawRow(10,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 11 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div> 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-12]{1}" name="setq12" id="setq12" oninput="drawRow(11,this.value,12)">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq12" id="setq12" oninput="drawRow(11,this.value,16)">
     <label class="mdl-textfield__label" for="setq1">Queen 12 Column</label>
-    <span class="mdl-textfield__error">Value must be ∈ [1,12]</span>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
+  </div> 
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq13" id="setq13" oninput="drawRow(12,this.value,16)">
+    <label class="mdl-textfield__label" for="setq1">Queen 13 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
+  </div> 
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq14" id="setq14" oninput="drawRow(13,this.value,16)">
+    <label class="mdl-textfield__label" for="setq1">Queen 14 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
+  </div> 
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq15" id="setq15" oninput="drawRow(14,this.value,16)">
+    <label class="mdl-textfield__label" for="setq1">Queen 15 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
+  </div> 
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" pattern="[1-16]{1}" name="setq16" id="setq16" oninput="drawRow(15,this.value,16)">
+    <label class="mdl-textfield__label" for="setq1">Queen 16 Column</label>
+    <span class="mdl-textfield__error">Value must be ∈ [1,16]</span>
   </div> 
 
-  <button type="submit" form="config12" style="float:right;" 
+  <button type="submit" form="config16" style="float:right;" 
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
     Submit
   </button>
@@ -152,7 +172,7 @@
     }
   }
 
-  drawBoard(c, ctx, 12);
+  drawBoard(c, ctx, 16);
 
 </script>
 {{end}}
@@ -161,7 +181,7 @@
 <script type="text/javascript">
 document.getElementById("homea").classList.remove("is-active");
 document.getElementById("eighta").classList.remove("is-active");
-document.getElementById("twelvea").classList.add("is-active");
-document.getElementById("sixteena").classList.remove("is-active");
+document.getElementById("twelvea").classList.remove("is-active");
+document.getElementById("sixteena").classList.add("is-active");
 </script>
 {{end}}
