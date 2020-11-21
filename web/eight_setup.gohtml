@@ -1,66 +1,141 @@
 {{define "content"}}
-<form action="eight_display" method="post" id="config8">
 <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--10-col">
+<div class="mdl-cell mdl-cell--6-col">
+<form action="eight_display" method="post" id="config8">
   <h3>Set Queen Restrictions:</h3>
   <p id="instructions">Leave empty to omit restrictions.</p>
-</div>
 
-<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--4-col">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq1" id="setq1">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq1" id="setq1" oninput="drawRow(0,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 1 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq2" id="setq2">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq2" id="setq2" oninput="drawRow(1,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 2 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq3" id="setq3">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq3" id="setq3" oninput="drawRow(2,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 3 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq4" id="setq4">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq4" id="setq4" oninput="drawRow(3,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 4 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
-</div>
-
-<div class="mdl-cell mdl-cell--middle mdl-cell--1-offset mdl-cell--4-col">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq5" id="setq5">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq5" id="setq5" oninput="drawRow(4,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 5 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq6" id="setq6">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq6" id="setq6" oninput="drawRow(5,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 6 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq7" id="setq7">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq7" id="setq7" oninput="drawRow(6,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 7 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div>
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq8" id="setq8">
+    <input class="mdl-textfield__input" type="text" pattern="[1-8]{1}" name="setq8" id="setq8" oninput="drawRow(7,this.value)">
     <label class="mdl-textfield__label" for="setq1">Queen 8 Column</label>
     <span class="mdl-textfield__error">Value must be ∈ [1,8]</span>
   </div> 
-</div>
 
-<div class="mdl-cell mdl-cell--middle mdl-cell--2-offset mdl-cell--8-col">
   <button type="submit" form="config8" style="float:right;" 
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
     Submit
   </button>
+</form>
 </div>
 
+  <!-- Canvas Element -->
+  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
+    <h3>Restricted Set Pieces:</h3>
+    <canvas id="cboard" width="400px" height="400px"></canvas>
+  </div>
 </div>
-</form>
+
+<script type="text/javascript">
+  let c = document.getElementById("cboard");
+  let ctx = c.getContext("2d");
+  let queens = 8;
+
+  function drawBoard(canvas, ctx, q) {
+    let cw = c.width;
+    let ch = c.height;
+    let sw = cw / q;
+    let sh = ch / q;
+    //console.log("sw: " + sw,
+    //            "sh: " + sh);
+    
+    for (m=0; m<q; m++) {1
+      for (n=0; n<q; n++) {
+        ctx.beginPath();
+        ctx.rect(n*sw, m*sh, sw, sh);
+        if (m%2) {
+          if (n%2) {
+            ctx.fillStyle = "black";
+            ctx.fill();
+          } else {
+            ctx.fillStyle = "white";
+            ctx.fill();
+          }
+        } else {
+          if (n%2) {
+            ctx.fillStyle = "white";
+            ctx.fill();
+          } else {
+            ctx.fillStyle = "black";
+            ctx.fill();
+          }
+        }
+      }
+    }
+  }
+
+  function drawRow(bm, bn) {
+    let cw = c.width;
+    let ch = c.height;
+    let sw = cw / 8;
+    let sh = ch / 8;
+
+    if (bn==0) {return}
+
+    for (n=0; n<8; n++) {
+      ctx.beginPath();
+      ctx.rect(n*sw, bm*sh, sw, sh);
+      if (bm%2) {
+        if (n%2) {
+          ctx.fillStyle = "black";
+          ctx.fill();
+        } else {
+          ctx.fillStyle = "white";
+          ctx.fill();
+        }
+      } else {
+        if (n%2) {
+          ctx.fillStyle = "white";
+          ctx.fill();
+        } else {
+          ctx.fillStyle = "black";
+          ctx.fill();
+        }
+      }
+      if (n==bn-1) {
+          ctx.fillStyle = "red";
+          ctx.fill();
+      } 
+    }
+  }
+
+  drawBoard(c, ctx, 8);
+
+</script>
 {{end}}
 
 {{define "navscript"}}
