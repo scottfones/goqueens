@@ -2,7 +2,7 @@
 <div class="mdl-grid">
   <!-- MDL Progress Bar with Indeterminate Progress -->
   <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch">
-    <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+    <div id="p2" style="width: 600px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
   </div>
 
   <!-- Canvas Element -->
@@ -14,7 +14,7 @@
 <script type="text/javascript">
   let c = document.getElementById("cboard");
   let ctx = c.getContext("2d");
-  let queens = 12;
+  let queens = 16;
 
   function drawBoard(canvas, ctx, q) {
     let rect = canvas.getBoundingClientRect();
@@ -22,8 +22,6 @@
     let ch = c.height;
     let sw = cw / q;
     let sh = ch / q;
-    console.log("sw: " + sw,
-                "sh: " + sh);
     
     for (m=0; m<q; m++) {
       for (n=0; n<q; n++) {
@@ -91,7 +89,7 @@
 <script type="text/javascript">
 document.getElementById("homea").classList.remove("is-active");
 document.getElementById("eighta").classList.remove("is-active");
-document.getElementById("twelvea").classList.add("is-active");
-document.getElementById("sixteena").classList.remove("is-active");
+document.getElementById("twelvea").classList.remove("is-active");
+document.getElementById("sixteena").classList.add("is-active");
 </script>
 {{end}}

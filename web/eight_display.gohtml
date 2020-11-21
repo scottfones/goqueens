@@ -2,7 +2,7 @@
 <div class="mdl-grid">
   <!-- MDL Progress Bar with Indeterminate Progress -->
   <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch">
-    <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+    <div id="p2" style="width: 600px;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
   </div>
 
   <!-- Canvas Element -->
@@ -30,8 +30,6 @@
     let ch = c.height;
     let sw = cw / q;
     let sh = ch / q;
-    console.log("sw: " + sw,
-                "sh: " + sh);
     
     for (m=0; m<q; m++) {
       for (n=0; n<q; n++) {
@@ -84,7 +82,7 @@
   } 
         
   //setBoardSize(c, ctx);
-  //drawBoard(c, ctx, queens);
+  drawBoard(c, ctx, queens);
 
 /*
   c.addEventListener("mousedown", function(e) { 
