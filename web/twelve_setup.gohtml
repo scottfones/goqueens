@@ -81,6 +81,12 @@
 </div>
 
 <script type="text/javascript">
+  const goimg = new Image();
+  const stimg = new Image();
+
+  goimg.src = "/web/img/queen_go.png";
+  stimg.src = "/web/img/queen_stop.png";
+
   let c = document.getElementById("cboard");
   let ctx = c.getContext("2d");
 
@@ -142,8 +148,7 @@
         }
       }
       if (n==bn-1) {
-          ctx.fillStyle = "red";
-          ctx.fill();
+        ctx.drawImage(stimg, n*sw, bm*sh, sw, sh);
       } 
     }
   }
