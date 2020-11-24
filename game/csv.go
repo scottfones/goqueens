@@ -18,9 +18,9 @@ type constraint struct {
 /*csv is the top level game structure.
 It holds the overall game state. */
 type csp struct {
-	size     int
-	queens   []queen
-	conSlice []constraint
+	size     int          `json:"size"`
+	queens   []queen      `json:"queens"`
+	conSlice []constraint `json:"constraints"`
 }
 
 func (c *csp) createQueens(initQs []int) {
@@ -38,26 +38,50 @@ func (c *csp) createQueens(initQs []int) {
 func (c *csp) createConstraints() {
 	n := c.size
 
-	for i := 0; i < n-1; i++ {
-		j := i + 1
-		for j < n {
-			p1 := c.queens[i]
-			p2 := c.queens[j]
+	for i, p1 := range c.queens[0 : n-1] {
+		for _, p2 := range c.queens[i+1 : n] {
 			con := constraint{q1: &p1, q2: &p2}
+			log.Println("Q1: ", p1.col)
+			log.Println("Q2: ", p2.col)
 
-			for r1 := range p1.domain {
-				for r2 := range p2.domain {
-					log.Println("Comparing: (", p1.col, ",", r1, ") and (", p2.col, ",", r2, ")")
+			for _, r1 := range p1.domain {
+				for _, r2 := range p2.domain {
+					//log.Println("Comparing: (", p1.col, ",", r1, ") and (", p2.col, ",", r2, ")")
 					if !(p1.isConflict(&p2, r1, r2)) {
-						log.Println("No Conflict")
+						//log.Println("No Conflict")
 						a := assignment{r1, r2}
 						con.assSlice = append(con.assSlice, a)
 					}
 				}
 			}
+			log.Println("Assignments: ", con.assSlice)
 			c.conSlice = append(c.conSlice, con)
-			j++
 		}
+	}
+}
+
+func (c *csp) revise(q1, q2 *queen) bool {
+	revise := false
+
+	return revise
+}
+
+func (c *csp) print(i int) {
+	log.Println("Game State: ", i)
+	log.Println("\tSize: ", c.size)
+	log.Println()
+	for _, q := range c.queens {
+		log.Println("\tQueen ", q.col, ":")
+		log.Println("\t\tColumn: ", q.col)
+		log.Println("\t\tRow: ", q.row)
+		log.Println("\t\tMovable: ", q.moveable)
+		log.Println("\t\tDomain: ", q.domain)
+		log.Println()
+	}
+	log.Println()
+	log.Println("Constraints:")
+	for _, con := range c.conSlice {
+		log.Println("(", con.q1, ", ", con.q2, "): ", con.assSlice)
 	}
 }
 
@@ -67,5 +91,9 @@ func NewGame(initQs []int) {
 	var game = csp{size: len(initQs)}
 	game.createQueens(initQs)
 	game.createConstraints()
-	log.Println(game)
+	//game.print(0)
+	//jsonStr, _ := json.Marshal(game)
+	//log.Println(string(jsonStr))
+	//log.Println(game)
+
 }
