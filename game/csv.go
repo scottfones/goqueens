@@ -41,12 +41,12 @@ func (c *csp) createConstraints() {
 	for i, p1 := range c.queens[0 : n-1] {
 		for _, p2 := range c.queens[i+1 : n] {
 			con := constraint{q1: &p1, q2: &p2}
-			log.Println("Q1: ", p1.col)
-			log.Println("Q2: ", p2.col)
+			log.Println("Q1: ", p1)
+			log.Println("Q2: ", p2)
 
 			for _, r1 := range p1.domain {
 				for _, r2 := range p2.domain {
-					//log.Println("Comparing: (", p1.col, ",", r1, ") and (", p2.col, ",", r2, ")")
+					log.Println("Comparing: (", p1.col, ",", r1, ") and (", p2.col, ",", r2, ")")
 					if !(p1.isConflict(&p2, r1, r2)) {
 						//log.Println("No Conflict")
 						a := assignment{r1, r2}
@@ -54,7 +54,7 @@ func (c *csp) createConstraints() {
 					}
 				}
 			}
-			log.Println("Assignments: ", con.assSlice)
+			log.Println("Assigning: ", con.assSlice)
 			c.conSlice = append(c.conSlice, con)
 		}
 	}

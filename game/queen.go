@@ -2,10 +2,10 @@ package game
 
 /*Queen defines the fields necessary for the CSP.*/
 type queen struct {
-	col      int   `json:"col"`
-	row      int   `json:"row"`
-	moveable bool  `json:"moveable"`
-	domain   []int `json:"-"`
+	col      int
+	row      int
+	moveable bool
+	domain   []int
 }
 
 func (q *queen) createDomain(n int) {
