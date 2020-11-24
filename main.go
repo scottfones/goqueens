@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
+	"./game"
 	"./web"
 )
 
@@ -21,6 +23,7 @@ var sixteenSetup *web.View
 var sixteenDisplay *web.View
 
 func main() {
+	// View Construction
 	index = web.NewView("bootstrap", "web/index.gohtml")
 	eightSetup = web.NewView("bootstrap", "web/eight_setup.gohtml")
 	eightDisplay = web.NewView("bootstrap", "web/eight_display.gohtml")
@@ -29,6 +32,7 @@ func main() {
 	sixteenSetup = web.NewView("bootstrap", "web/sixteen_setup.gohtml")
 	sixteenDisplay = web.NewView("bootstrap", "web/sixteen_display.gohtml")
 
+	// Router Definitions
 	http.Handle("/web/", http.StripPrefix("/web/", http.FileServer(http.Dir("web"))))
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/eight_setup", eightSetupHandler)
@@ -38,9 +42,30 @@ func main() {
 	http.HandleFunc("/sixteen_setup", sixteenSetupHandler)
 	http.HandleFunc("/sixteen_display", sixteenDisplayHandler)
 
+	// Start Server
 	log.Println("Listening on :3000...")
 	http.ListenAndServe(":3000", nil)
 
+}
+
+func processQSlice(qs []string) []int {
+	islice := []int{}
+	for _, s := range qs {
+		if len(s) == 0 {
+			islice = append(islice, -1)
+
+		} else {
+			i, err := strconv.Atoi(s)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			islice = append(islice, i)
+		}
+	}
+
+	return islice
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +79,19 @@ func eightSetupHandler(w http.ResponseWriter, r *http.Request) {
 
 func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println(r.Form)
+	qslice := []string{
+		r.Form.Get("setq1"),
+		r.Form.Get("setq2"),
+		r.Form.Get("setq3"),
+		r.Form.Get("setq4"),
+		r.Form.Get("setq5"),
+		r.Form.Get("setq6"),
+		r.Form.Get("setq7"),
+		r.Form.Get("setq8"),
+	}
+
+	game.NewGame(processQSlice(qslice))
+
 	log.Println("Loading: 8-Queens Display")
 	eightDisplay.Render(w, nil)
 }
@@ -67,6 +104,7 @@ func twelveSetupHandler(w http.ResponseWriter, r *http.Request) {
 func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	fmt.Println(r.Form)
+
 	log.Println("Loading: 12-Queens Display")
 	twelveDisplay.Render(w, nil)
 }
