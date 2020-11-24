@@ -19,7 +19,7 @@ func (q *queen) createDomain(n int) {
 }
 
 func (q *queen) isConflict(q2 *queen, r1, r2 int) bool {
-	lineFit := (r1 - r2) / (q.col - q2.col)
+	lineFit := (float64(r1) - float64(r2)) / float64(q.col-q2.col)
 
 	switch lineFit {
 	case -1, 0, 1:
