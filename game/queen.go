@@ -14,8 +14,21 @@ func (q *queen) createDomain(n int) {
 	for i := 0; i < n; i++ {
 		dom[i] = i + 1
 	}
-
 	q.domain = dom
+}
+
+func (q *queen) isDomainEqual(tmpDom []int) bool {
+	if len(q.domain) != len(tmpDom) {
+		return false
+	}
+
+	for i, x := range q.domain {
+		if x != tmpDom[i] {
+			return false
+		}
+	}
+
+	return true
 }
 
 func (q *queen) isConflict(q2 *queen, r1, r2 int) bool {
