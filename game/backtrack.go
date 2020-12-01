@@ -24,18 +24,7 @@ func mrv(c *csp) Queen {
 			minq = q
 		}
 	}
-
 	return minq
-}
-
-func addInferences(c *csp) {
-	for idx := range c.queens {
-		q := c.queens[idx]
-
-		if len(q.Domain) == 1 {
-			c.queens[idx].Row = q.Domain[0]
-		}
-	}
 }
 
 func backtrack(c *csp, assignments []Solution) []Solution {
@@ -56,8 +45,6 @@ func backtrack(c *csp, assignments []Solution) []Solution {
 		tq.Domain = []int{val}
 
 		if ac3(&tcsp) {
-			addInferences(&tcsp)
-
 			s := Solution{pivotQueen.Col, val, tcsp.queens}
 			assignments = append(assignments, s)
 			tresult := backtrack(&tcsp, assignments)
