@@ -27,7 +27,6 @@ func (q *queen) isDomainEqual(tmpDom []int) bool {
 			return false
 		}
 	}
-
 	return true
 }
 

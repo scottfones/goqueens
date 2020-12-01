@@ -137,5 +137,4 @@ func NewGame(initQs []int) {
 	} else {
 		log.Println("Input is inconsistant with constraints.")
 	}
-	//game.print(10)
 }
