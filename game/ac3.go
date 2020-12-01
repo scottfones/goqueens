@@ -1,48 +1,61 @@
 package game
 
-import "log"
+//import "log"
 
 func revise(c *csp, col1, col2 int) bool {
 	revised := false
 
-	q1 := c.getQueen(col1)
-	q2 := c.getQueen(col2)
+	q1 := c.queens[col1-1]
+	q2 := c.queens[col2-1]
 	tmpDomain := make([]int, 0)
 
-	for idx1 := 0; idx1 < len(q1.domain); {
-		for idx2 := 0; idx2 < len(q2.domain); {
-			if !(q1.isConflict(q2, q1.domain[idx1], q2.domain[idx2])) {
-				tmpDomain = append(tmpDomain, q1.domain[idx1])
-				idx2 = len(q2.domain)
-				continue
+	for _, x1 := range q1.domain {
+		for _, x2 := range q2.domain {
+			if c.isInConstraintMap(q1, q2, x1, x2) {
+				tmpDomain = append(tmpDomain, x1)
+				break
 			}
-			idx2++
 		}
-		idx1++
 	}
 
-	if !(q1.isDomainEqual(tmpDomain)) {
-		log.Println("revised: ", tmpDomain)
+	if len(tmpDomain) != len(q1.domain) {
+		//log.Println("Revise True")
+		//log.Println("Orig: ", c.queens[col1-1].domain)
+		//log.Println("New: ", tmpDomain)
+		c.queens[col1-1].domain = tmpDomain
 		revised = true
-		q1.domain = tmpDomain
 	}
-
 	return revised
 }
 
 func ac3(c *csp) bool {
+	//c.print(3)
 	aq := arcQueue{}
 	aq.newQueue(c)
-	log.Println("AQ: ", aq)
+	//log.Println("AQ: ", aq)
 
 	for len(aq.arcs) > 0 {
 		aqp := aq.pop()
 		col1 := aqp.c1
 		col2 := aqp.c2
 
+		/*
+		log.Println("Comparing Q", col1, " and Q", col2)
+		log.Println("Q1 Domain: ", c.queens[col1-1].domain)
+		log.Println("Q2 Domain: ", c.queens[col2-1].domain)
+		cm, ok := c.conMap[cspPair{col1, col2}]
+		if ok {
+			log.Println("ConMap: ", cm)
+		} else {
+			log.Println("RevConMap: ", c.conMap[cspPair{col2, col1}])
+		}
+		*/
+
 		if revise(c, col1, col2) {
-			qn := c.getQueen(col1)
-			if len(qn.domain) == 0 {
+			//log.Println("Revise: True")
+			if len(c.queens[col1-1].domain) == 0 {
+				//log.Println("AC3: False")
+				//c.print(13)
 				return false
 			}
 

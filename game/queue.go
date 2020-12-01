@@ -26,6 +26,9 @@ func (q *arcQueue) newQueue(c *csp) {
 	n := len(c.queens)
 	for _, q1 := range c.queens[0 : n-1] {
 		for _, q2 := range c.queens[1:n] {
+			if q1.col == q2.col {
+				continue
+			}
 			a := arc{q1.col, q2.col}
 			q.add(a)
 		}

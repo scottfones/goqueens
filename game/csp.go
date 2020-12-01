@@ -25,7 +25,7 @@ func (c *csp) createQueens(initQs []int) {
 
 		} else {
 			// If queen is restricted
-			c.queens = append(c.queens, queen{i + 1, v + 1, false, []int{v + 1}})
+			c.queens = append(c.queens, queen{i + 1, v, false, []int{v}})
 		}
 	}
 }
@@ -43,7 +43,7 @@ func (c *csp) createConstraints() {
 
 			for _, r1 := range p1.domain {
 				for _, r2 := range p2.domain {
-					if !(p1.isConflict(&p2, r1, r2)) {
+					if !(p1.isConflict(p2, r1, r2)) {
 						// If no conflict add domain pair
 						a := cspPair{r1, r2}
 						assignSlice = append(assignSlice, a)
@@ -56,9 +56,40 @@ func (c *csp) createConstraints() {
 	}
 }
 
-func (c *csp) getQueen(col int) *queen {
+func (c *csp) isAssigned() bool {
+	for _, q := range c.queens {
+		if q.row == -1 {
+			return false
+		}
+	}
+	return true
+}
+
+func (c *csp) isInConstraintMap(q1, q2 queen, x1, x2 int) bool {
+	if q2.col < q1.col {
+		return c.isInConstraintMap(q2, q1, x2, x1)
+	}
+	constraints := c.conMap[cspPair{q1.col, q2.col}]
+
+	for _, conPair := range constraints {
+		if conPair.p1 == x1 && conPair.p2 == x2 {
+			return true
+		}
+	}
+	return false
+}
+
+func (c *csp) getCopy() csp {
+	qcopy := make([]queen, 0)
+	for i := range c.queens {
+		qcopy = append(qcopy, c.queens[i])
+	}
+	return csp{qcopy, c.conMap}
+}
+
+func (c *csp) getQueen(col int) queen {
 	idx := col - 1
-	return &c.queens[idx]
+	return c.queens[idx]
 }
 
 func (c *csp) print(i int) {
@@ -91,13 +122,20 @@ func (c *csp) print(i int) {
 /*NewGame creates a csp of size n with initial queen
 placements according to map initQ*/
 func NewGame(initQs []int) {
-	var game = csp{}
+	var game = &csp{}
 	game.createQueens(initQs)
 	game.createConstraints()
-	game.print(0)
-	if ac3(&game) {
-		game.print(1)
+	if ac3(game) {
+		addInferences(game)
+		game.print(0)
+		sol := backtrackingSearch(game)
+		for idx, g := range sol {
+			log.Println("\n\nPrinting Solution ", idx)
+			g.print(idx)
+		}
+		log.Println("Solution Length:", len(sol))
 	} else {
-		log.Fatal("No solutions found.")
+		log.Println("Input is inconsistant with constraints.")
 	}
+	//game.print(10)
 }

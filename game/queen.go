@@ -31,7 +31,7 @@ func (q *queen) isDomainEqual(tmpDom []int) bool {
 	return true
 }
 
-func (q *queen) isConflict(q2 *queen, r1, r2 int) bool {
+func (q *queen) isConflict(q2 queen, r1, r2 int) bool {
 	lineFit := (float64(r1) - float64(r2)) / float64(q.col-q2.col)
 
 	switch lineFit {
