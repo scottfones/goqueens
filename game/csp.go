@@ -88,11 +88,6 @@ func (c *csp) getCopy() csp {
 	return csp{qcopy, c.conMap}
 }
 
-func (c *csp) getQueen(col int) Queen {
-	idx := col - 1
-	return c.queens[idx]
-}
-
 func (c *csp) print(i int) {
 	log.Println("Game State: ", i)
 	log.Println("\tSize: ", len(c.queens))
@@ -100,12 +95,15 @@ func (c *csp) print(i int) {
 	printQueens(c.queens)
 	log.Println()
 	log.Println("Constraint Maps:")
+
+	// Print constraint map in order
 	n := len(c.queens)
 	for i, p1 := range c.queens[0 : n-1] {
 		for _, p2 := range c.queens[i+1 : n] {
 			ap := cspPair{p1.Col, p2.Col}
-			output, ok := c.conMap[ap]
 
+			// If mapping exists, print
+			output, ok := c.conMap[ap]
 			if ok {
 				log.Println("\tQ(", p1.Col, ",", p2.Col, "):", output)
 			}
