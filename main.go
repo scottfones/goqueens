@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -26,11 +25,11 @@ func main() {
 	// View Construction
 	index = web.NewView("bootstrap", "web/index.gohtml")
 	eightSetup = web.NewView("bootstrap", "web/eight_setup.gohtml")
-	eightDisplay = web.NewView("bootstrap", "web/eight_display.gohtml")
+	eightDisplay = web.NewView("bootstrap", "web/solution_display.gohtml")
 	twelveSetup = web.NewView("bootstrap", "web/twelve_setup.gohtml")
-	twelveDisplay = web.NewView("bootstrap", "web/twelve_display.gohtml")
+	twelveDisplay = web.NewView("bootstrap", "web/solution_display.gohtml")
 	sixteenSetup = web.NewView("bootstrap", "web/sixteen_setup.gohtml")
-	sixteenDisplay = web.NewView("bootstrap", "web/sixteen_display.gohtml")
+	sixteenDisplay = web.NewView("bootstrap", "web/solution_display.gohtml")
 
 	// Router Definitions
 	http.Handle("/web/", http.StripPrefix("/web/", http.FileServer(http.Dir("web"))))
@@ -90,10 +89,10 @@ func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 		r.Form.Get("setq8"),
 	}
 
-	game.NewGame(processQSlice(qslice))
+	solns := game.NewGame(processQSlice(qslice))
 
 	log.Println("Loading: 8-Queens Display")
-	eightDisplay.Render(w, nil)
+	eightDisplay.Render(w, map[string]string{"solns": string(solns)})
 }
 
 func twelveSetupHandler(w http.ResponseWriter, r *http.Request) {
@@ -103,10 +102,25 @@ func twelveSetupHandler(w http.ResponseWriter, r *http.Request) {
 
 func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println(r.Form)
+	qslice := []string{
+		r.Form.Get("setq1"),
+		r.Form.Get("setq2"),
+		r.Form.Get("setq3"),
+		r.Form.Get("setq4"),
+		r.Form.Get("setq5"),
+		r.Form.Get("setq6"),
+		r.Form.Get("setq7"),
+		r.Form.Get("setq8"),
+		r.Form.Get("setq9"),
+		r.Form.Get("setq10"),
+		r.Form.Get("setq11"),
+		r.Form.Get("setq12"),
+	}
+
+	solns := game.NewGame(processQSlice(qslice))
 
 	log.Println("Loading: 12-Queens Display")
-	twelveDisplay.Render(w, nil)
+	twelveDisplay.Render(w, map[string]string{"solns": string(solns)})
 }
 
 func sixteenSetupHandler(w http.ResponseWriter, r *http.Request) {
@@ -116,7 +130,27 @@ func sixteenSetupHandler(w http.ResponseWriter, r *http.Request) {
 
 func sixteenDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	fmt.Println(r.Form)
+	qslice := []string{
+		r.Form.Get("setq1"),
+		r.Form.Get("setq2"),
+		r.Form.Get("setq3"),
+		r.Form.Get("setq4"),
+		r.Form.Get("setq5"),
+		r.Form.Get("setq6"),
+		r.Form.Get("setq7"),
+		r.Form.Get("setq8"),
+		r.Form.Get("setq9"),
+		r.Form.Get("setq10"),
+		r.Form.Get("setq11"),
+		r.Form.Get("setq12"),
+		r.Form.Get("setq13"),
+		r.Form.Get("setq14"),
+		r.Form.Get("setq15"),
+		r.Form.Get("setq16"),
+	}
+
+	solns := game.NewGame(processQSlice(qslice))
+
 	log.Println("Loading: 16-Queens Display")
-	sixteenDisplay.Render(w, nil)
+	sixteenDisplay.Render(w, map[string]string{"solns": string(solns)})
 }

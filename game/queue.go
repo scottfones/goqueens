@@ -23,13 +23,13 @@ func (q *arcQueue) pop() arc {
 }
 
 func (q *arcQueue) newQueue(c *csp) {
-	n := len(c.queens)
-	for _, q1 := range c.queens[0 : n-1] {
-		for _, q2 := range c.queens[1:n] {
-			if q1.col == q2.col {
+	//n := len(c.queens)
+	for _, q1 := range c.queens {
+		for _, q2 := range c.queens {
+			if q1.Col == q2.Col {
 				continue
 			}
-			a := arc{q1.col, q2.col}
+			a := arc{q1.Col, q2.Col}
 			q.add(a)
 		}
 	}

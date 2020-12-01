@@ -2,22 +2,25 @@ package game
 
 import "log"
 
-type solution struct {
+type Solution struct {
+	Column int
+	Value  int
+	Queens []Queen
 }
 
-func mrv(c *csp) queen {
-	var minq queen
+func mrv(c *csp) Queen {
+	var minq Queen
 
 	for i := range c.queens {
 		q := c.queens[i]
 
-		if q.row != -1 {
+		if q.Row != -1 {
 			continue
 
-		} else if minq.row == 0 {
+		} else if minq.Row == 0 {
 			minq = q
 
-		} else if len(q.domain) < len(minq.domain) {
+		} else if len(q.Domain) < len(minq.Domain) {
 			minq = q
 		}
 	}
@@ -29,44 +32,47 @@ func addInferences(c *csp) {
 	for idx := range c.queens {
 		q := c.queens[idx]
 
-		if len(q.domain) == 1 {
-			c.queens[idx].row = q.domain[0]
+		if len(q.Domain) == 1 {
+			c.queens[idx].Row = q.Domain[0]
 		}
 	}
 }
 
-func backtrack(c *csp, assignments []csp) []csp {
-	failureState := make([]csp, 0)
+func backtrack(c *csp, assignments []Solution) []Solution {
+	failureState := make([]Solution, 0)
 
 	if c.isAssigned() {
 		return assignments
 	}
 
 	pivotQueen := mrv(c)
-	log.Println("Looking at Queen:", pivotQueen.col)
-	for _, val := range pivotQueen.domain {
-		tcsp := c.getCopy()
-		tq := &tcsp.queens[pivotQueen.col-1]
-		tq.row = val
-		tq.domain = []int{val}
-
+	log.Println("Looking at Queen:", pivotQueen.Col)
+	for _, val := range pivotQueen.Domain {
 		log.Println("Domain Value:", val)
-		if ac3(&tcsp) {
 
+		tcsp := c.getCopy()
+		tq := &tcsp.queens[pivotQueen.Col-1]
+		tq.Row = val
+		tq.Domain = []int{val}
+
+		if ac3(&tcsp) {
 			addInferences(&tcsp)
-			assignments = append(assignments, tcsp)
+
+			s := Solution{pivotQueen.Col, val, tcsp.queens}
+			assignments = append(assignments, s)
 			tresult := backtrack(&tcsp, assignments)
 
 			if len(tresult) > 0 {
 				log.Println("Solution Length:", len(tresult))
 				return tresult
 			}
+			assignments = assignments[:len(assignments)-1]
 		}
 	}
 	log.Println("Solution not found")
 	return failureState
 }
 
-func backtrackingSearch(c *csp) []csp {
-	return backtrack(c, make([]csp, 0))
+func backtrackingSearch(c *csp) []Solution {
+	return backtrack(c, make([]Solution, 0))
 }

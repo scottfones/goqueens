@@ -7,8 +7,8 @@ func revise(c *csp, col1, col2 int) bool {
 	q2 := c.queens[col2-1]
 	tmpDomain := make([]int, 0)
 
-	for _, x1 := range q1.domain {
-		for _, x2 := range q2.domain {
+	for _, x1 := range q1.Domain {
+		for _, x2 := range q2.Domain {
 			if c.isInConstraintMap(q1, q2, x1, x2) {
 				tmpDomain = append(tmpDomain, x1)
 				break
@@ -16,8 +16,8 @@ func revise(c *csp, col1, col2 int) bool {
 		}
 	}
 
-	if len(tmpDomain) != len(q1.domain) {
-		c.queens[col1-1].domain = tmpDomain
+	if len(tmpDomain) != len(q1.Domain) {
+		c.queens[col1-1].Domain = tmpDomain
 		revised = true
 	}
 	return revised
@@ -33,16 +33,16 @@ func ac3(c *csp) bool {
 		col2 := aqp.c2
 
 		if revise(c, col1, col2) {
-			if len(c.queens[col1-1].domain) == 0 {
+			if len(c.queens[col1-1].Domain) == 0 {
 				return false
 			}
 
 			for _, qneighbor := range c.queens {
-				switch qneighbor.col {
+				switch qneighbor.Col {
 				case col1, col2:
 					continue
 				}
-				aq.add(arc{col1, qneighbor.col})
+				aq.add(arc{col1, qneighbor.Col})
 			}
 		}
 	}

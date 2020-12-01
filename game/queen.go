@@ -1,28 +1,28 @@
 package game
 
 /*Queen defines the fields necessary for the CSP.*/
-type queen struct {
-	col      int
-	row      int
-	moveable bool
-	domain   []int
+type Queen struct {
+	Col      int
+	Row      int
+	Moveable bool
+	Domain   []int
 }
 
-func (q *queen) createDomain(n int) {
+func (q *Queen) createDomain(n int) {
 	dom := make([]int, n)
 
 	for i := 0; i < n; i++ {
 		dom[i] = i + 1
 	}
-	q.domain = dom
+	q.Domain = dom
 }
 
-func (q *queen) isDomainEqual(tmpDom []int) bool {
-	if len(q.domain) != len(tmpDom) {
+func (q *Queen) isDomainEqual(tmpDom []int) bool {
+	if len(q.Domain) != len(tmpDom) {
 		return false
 	}
 
-	for i, x := range q.domain {
+	for i, x := range q.Domain {
 		if x != tmpDom[i] {
 			return false
 		}
@@ -30,8 +30,8 @@ func (q *queen) isDomainEqual(tmpDom []int) bool {
 	return true
 }
 
-func (q *queen) isConflict(q2 queen, r1, r2 int) bool {
-	lineFit := (float64(r1) - float64(r2)) / float64(q.col-q2.col)
+func (q *Queen) isConflict(q2 Queen, r1, r2 int) bool {
+	lineFit := (float64(r1) - float64(r2)) / float64(q.Col-q2.Col)
 
 	switch lineFit {
 	case -1, 0, 1:
