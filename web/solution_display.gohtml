@@ -2,7 +2,8 @@
 <div class="mdl-grid">
   <!-- Canvas Element -->
   <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch" style="width: 700px;">
-  <h3 id="moveInfo" style="margin: auto;"></h3>
+  <h4 id="stepInfo" style="margin: auto;"></h4>
+  <h5 id="moveInfo" style="margin: auto;"></h5>
   </div>
   <!-- Canvas Element -->
   <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch">
@@ -117,7 +118,9 @@
   }
 
   function updateInfo() {
+    let step = document.getElementById('stepInfo');
     let info = document.getElementById('moveInfo');
+    step.innerHTML = "Step " + (idx+1);
     info.innerHTML = "Pivot Queen: " + solns[idx]["Column"] + ", Set Value: " + solns[idx]["Value"];
   }
 
