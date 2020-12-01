@@ -133,7 +133,6 @@ func NewGame(initQs []int) []byte {
 
 	solns := make([]Solution, 0)
 	if ac3(game) {
-		addInferences(game)
 		solns = backtrackingSearch(game)
 		log.Println("Initial State:")
 		game.print(0)
