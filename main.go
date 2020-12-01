@@ -93,7 +93,7 @@ func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 
 	solns := game.NewGame(processQSlice(qslice))
 
-	if len(solns) == 2 {
+	if string(solns) == "[]" {
 		log.Println("Loading: No Solution")
 		nosolution.Render(w, nil)
 	} else {
@@ -125,7 +125,8 @@ func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	solns := game.NewGame(processQSlice(qslice))
-	if len(solns) == 2 {
+
+	if string(solns) == "[]" {
 		log.Println("Loading: No Solution")
 		nosolution.Render(w, nil)
 	} else {
@@ -162,7 +163,7 @@ func sixteenDisplayHandler(w http.ResponseWriter, r *http.Request) {
 
 	solns := game.NewGame(processQSlice(qslice))
 
-	if len(solns) == 2 {
+	if string(solns) == "[]" {
 		log.Println("Loading: No Solution")
 		nosolution.Render(w, nil)
 	} else {
