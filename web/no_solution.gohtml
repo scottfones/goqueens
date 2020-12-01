@@ -1,0 +1,28 @@
+{{define "content"}}
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--6-col">
+    <div class="mdl-card mdl-shadow--2dp" style="width: 600px; height: 500px;">
+    <div class="mdl-card__media"><img src="/web/img/not_found.jpeg" width="600" height="400" border="0"
+    alt="" style="padding:5px;">
+    </div>
+    <div class="mdl-card__supporting-text">
+      No Solution Found
+    </div>
+    <div class="mdl-card__actions mdl-card--border">
+        <a href="/" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="float: right;">
+        Restart
+        </a>
+    </div>
+    </div>
+  </div>
+</div>
+{{end}}
+
+{{define "navscript"}}
+<script type="text/javascript">
+document.getElementById("homea").classList.add("is-active");
+document.getElementById("eighta").classList.remove("is-active");
+document.getElementById("twelvea").classList.remove("is-active");
+document.getElementById("sixteena").classList.remove("is-active");
+</script>
+{{end}}

@@ -11,6 +11,7 @@ import (
 
 // Define Webpages
 var index *web.View
+var nosolution *web.View
 
 var eightSetup *web.View
 var eightDisplay *web.View
@@ -24,6 +25,7 @@ var sixteenDisplay *web.View
 func main() {
 	// View Construction
 	index = web.NewView("bootstrap", "web/index.gohtml")
+	nosolution = web.NewView("bootstrap", "web/no_solution.gohtml")
 	eightSetup = web.NewView("bootstrap", "web/eight_setup.gohtml")
 	eightDisplay = web.NewView("bootstrap", "web/solution_display.gohtml")
 	twelveSetup = web.NewView("bootstrap", "web/twelve_setup.gohtml")
@@ -91,8 +93,13 @@ func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 
 	solns := game.NewGame(processQSlice(qslice))
 
-	log.Println("Loading: 8-Queens Display")
-	eightDisplay.Render(w, map[string]string{"solns": string(solns)})
+	if len(solns) == 2 {
+		log.Println("Loading: No Solution")
+		nosolution.Render(w, nil)
+	} else {
+		log.Println("Loading: 8-Queens Display")
+		eightDisplay.Render(w, map[string]string{"solns": string(solns)})
+	}
 }
 
 func twelveSetupHandler(w http.ResponseWriter, r *http.Request) {
@@ -118,9 +125,13 @@ func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	solns := game.NewGame(processQSlice(qslice))
-
-	log.Println("Loading: 12-Queens Display")
-	twelveDisplay.Render(w, map[string]string{"solns": string(solns)})
+	if len(solns) == 2 {
+		log.Println("Loading: No Solution")
+		nosolution.Render(w, nil)
+	} else {
+		log.Println("Loading: 12-Queens Display")
+		twelveDisplay.Render(w, map[string]string{"solns": string(solns)})
+	}
 }
 
 func sixteenSetupHandler(w http.ResponseWriter, r *http.Request) {
@@ -151,6 +162,11 @@ func sixteenDisplayHandler(w http.ResponseWriter, r *http.Request) {
 
 	solns := game.NewGame(processQSlice(qslice))
 
-	log.Println("Loading: 16-Queens Display")
-	sixteenDisplay.Render(w, map[string]string{"solns": string(solns)})
+	if len(solns) == 2 {
+		log.Println("Loading: No Solution")
+		nosolution.Render(w, nil)
+	} else {
+		log.Println("Loading: 16-Queens Display")
+		sixteenDisplay.Render(w, map[string]string{"solns": string(solns)})
+	}
 }
