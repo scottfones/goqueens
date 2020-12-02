@@ -1,6 +1,6 @@
 {{define "content"}}
-<div class="mdl-grid">
-<div class="mdl-cell mdl-cell--6-col">
+<div class="mdl-grid" style="justify-content: center;">
+<div class="mdl-cell mdl-cell--4-col">
 <form action="eight_display" method="post" id="config8">
   <h3>Set Queen Restrictions:</h3>
   <p id="instructions">Leave empty to omit restrictions.</p>
@@ -54,86 +54,23 @@
 </div>
 
   <!-- Canvas Element -->
-  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
-    <h3>Restricted Play List:</h3>
-    <canvas id="cboard" width="400px" height="400px"></canvas>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--stretch">
+    <h3 style="margin-left: auto; margin-right: auto; width: 400px;">Restricted Play List:</h3>
+    <canvas id="cboard" style="display: block; margin: 0 auto;" width="400px" height="400px"></canvas>
   </div>
 </div>
 
-<script type="text/javascript">
-  const goimg = new Image();
+<script src="/web/js/solution_setup.js"></script>
+<script defer>
   const stimg = new Image();
-
-  goimg.src = "/web/img/queen_go.png";
   stimg.src = "/web/img/queen_stop.png";
 
   let c = document.getElementById("cboard");
   let ctx = c.getContext("2d");
 
-  function drawBoard(canvas, ctx, q) {
-    let cw = c.width;
-    let ch = c.height;
-    let sw = cw / q;
-    let sh = ch / q;
-    
-    for (n=0; n<q; n++) {
-      for (m=0; m<q; m++) {
-        ctx.beginPath();
-        ctx.rect(n*sw, m*sh, sw, sh);
-        if (n%2) {
-          if (m%2) {
-            ctx.fillStyle = "black";
-            ctx.fill();
-          } else {
-            ctx.fillStyle = "white";
-            ctx.fill();
-          }
-        } else {
-          if (m%2) {
-            ctx.fillStyle = "white";
-            ctx.fill();
-          } else {
-            ctx.fillStyle = "black";
-            ctx.fill();
-          }
-        }
-      }
-    }
-  }
-
-  function drawCol(bm, bn, q) {
-    let cw = c.width;
-    let ch = c.height;
-    let sw = cw / q;
-    let sh = ch / q;
-
-    for (m=0; m<q; m++) {
-      ctx.beginPath();
-      ctx.rect(bn*sw, m*sh, sw, sh);
-      if (bn%2) {
-        if (m%2) {
-          ctx.fillStyle = "black";
-          ctx.fill();
-        } else {
-          ctx.fillStyle = "white";
-          ctx.fill();
-        }
-      } else {
-        if (m%2) {
-          ctx.fillStyle = "white";
-          ctx.fill();
-        } else {
-          ctx.fillStyle = "black";
-          ctx.fill();
-        }
-      }
-      if (m==bm-1) {
-        ctx.drawImage(stimg, bn*sw, m*sh, sw, sh);
-      } 
-    }
-  }
-
-  drawBoard(c, ctx, 8);
+  stimg.onload = function() {
+    drawBoard(c, ctx, 8);
+  };
 </script>
 {{end}}
 

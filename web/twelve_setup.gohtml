@@ -1,10 +1,9 @@
 {{define "content"}}
-<div class="mdl-grid">
-<div class="mdl-cell mdl-cell--6-col">
-<form action="twelve_display" method="post" id="config12">
+<div class="mdl-grid" style="justify-content: center;">
+<div class="mdl-cell mdl-cell--4-col">
   <h3>Set Queen Restrictions:</h3>
   <p id="instructions">Leave empty to omit restrictions.</p>
-
+ <form action="twelve_display" method="post" id="config12">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     <input class="mdl-textfield__input" type="text" pattern="[1-9]|1[0-2]" name="setq1" id="setq1" oninput="drawCol(this.value, 0, 12)">
     <label class="mdl-textfield__label" for="setq1">Queen 1 Row</label>
@@ -74,86 +73,24 @@
 </div>
 
   <!-- Canvas Element -->
-  <div class="mdl-cell mdl-cell--6-col mdl-cell--stretch">
-    <h3>Restricted Play List:</h3>
-    <canvas id="cboard" width="400px" height="400px"></canvas>
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--stretch">
+    <h3 style="margin-left: auto; margin-right: auto; width: 400px;">Restricted Play List:</h3>
+    <canvas id="cboard" style="display: block; margin: 0 auto;" width="400px" height="400px"></canvas>
   </div>
 </div>
 
-<script type="text/javascript">
-  const goimg = new Image();
-  const stimg = new Image();
 
-  goimg.src = "/web/img/queen_go.png";
+<script src="/web/js/solution_setup.js"></script>
+<script defer>
+  const stimg = new Image();
   stimg.src = "/web/img/queen_stop.png";
 
   let c = document.getElementById("cboard");
   let ctx = c.getContext("2d");
 
-  function drawBoard(canvas, ctx, q) {
-    let cw = c.width;
-    let ch = c.height;
-    let sw = cw / q;
-    let sh = ch / q;
-    
-    for (n=0; n<q; n++) {
-      for (m=0; m<q; m++) {
-        ctx.beginPath();
-        ctx.rect(n*sw, m*sh, sw, sh);
-        if (n%2) {
-          if (m%2) {
-            ctx.fillStyle = "black";
-            ctx.fill();
-          } else {
-            ctx.fillStyle = "white";
-            ctx.fill();
-          }
-        } else {
-          if (m%2) {
-            ctx.fillStyle = "white";
-            ctx.fill();
-          } else {
-            ctx.fillStyle = "black";
-            ctx.fill();
-          }
-        }
-      }
-    }
+  stimg.onload = function() {
+    drawBoard(c, ctx, 12);
   }
-
-  function drawCol(bm, bn, q) {
-    let cw = c.width;
-    let ch = c.height;
-    let sw = cw / q;
-    let sh = ch / q;
-
-    for (m=0; m<q; m++) {
-      ctx.beginPath();
-      ctx.rect(bn*sw, m*sh, sw, sh);
-      if (bn%2) {
-        if (m%2) {
-          ctx.fillStyle = "black";
-          ctx.fill();
-        } else {
-          ctx.fillStyle = "white";
-          ctx.fill();
-        }
-      } else {
-        if (m%2) {
-          ctx.fillStyle = "white";
-          ctx.fill();
-        } else {
-          ctx.fillStyle = "black";
-          ctx.fill();
-        }
-      }
-      if (m==bm-1) {
-        ctx.drawImage(stimg, bn*sw, m*sh, sw, sh);
-      } 
-    }
-  }
-
-  drawBoard(c, ctx, 12);
 </script>
 {{end}}
 
