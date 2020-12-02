@@ -1,3 +1,6 @@
+// Define csp struct and methods. 
+// NewGame() exports entrypoint to model
+
 package game
 
 import (
@@ -10,13 +13,14 @@ type cspPair struct {
 	p2 int
 }
 
-// csp is the top level game structure.
-// It holds the overall game state.
+// csp is the top level game structure
+// and holds the game state.
 type csp struct {
 	queens []Queen
-	conMap map[cspPair][]cspPair
+	conMap map[cspPair][]cspPair // Map of key pair to valid row assignments
 }
 
+// createQueens from the slice generated in the view.
 func (c *csp) createQueens(initQs []int) {
 	for i, v := range initQs {
 		if v == -1 {
@@ -31,16 +35,18 @@ func (c *csp) createQueens(initQs []int) {
 	}
 }
 
+// createConstraints via line fitting. If row
+// assignments are valid, add to the conMap.
 func (c *csp) createConstraints() {
 	n := len(c.queens)
-	c.conMap = make(map[cspPair][]cspPair)
+	c.conMap = make(map[cspPair][]cspPair) // Initialize empty conMap
 
 	// Iterate from the first queen to the second to last
 	for i, p1 := range c.queens[0 : n-1] {
 		// Iterate from the second queen to the last
 		for _, p2 := range c.queens[i+1 : n] {
-			kp := cspPair{p1.Col, p2.Col} // Map Key
-			assignSlice := []cspPair{}    // Map Value
+			kp := cspPair{p1.Col, p2.Col} // Map key
+			assignSlice := []cspPair{}    // Initialize empty map value
 
 			for _, r1 := range p1.Domain {
 				for _, r2 := range p2.Domain {
@@ -57,6 +63,8 @@ func (c *csp) createConstraints() {
 	}
 }
 
+// isAssgned returns true if every 
+// queen has been assigned a row.
 func (c *csp) isAssigned() bool {
 	for _, q := range c.queens {
 		if q.Row == -1 {
@@ -66,12 +74,17 @@ func (c *csp) isAssigned() bool {
 	return true
 }
 
+// isInConstraintMap returns true if `q1` at row `x1` and
+// `q2` at row `x2` is found within the constraint map.
 func (c *csp) isInConstraintMap(q1, q2 Queen, x1, x2 int) bool {
 	if q2.Col < q1.Col {
+		// Reverse queen order
+		// Constraint map is generated in one "direction"
 		return c.isInConstraintMap(q2, q1, x2, x1)
 	}
 	constraints := c.conMap[cspPair{q1.Col, q2.Col}]
 
+	// Iterate through all pairs of valid row assignments
 	for _, conPair := range constraints {
 		if conPair.p1 == x1 && conPair.p2 == x2 {
 			return true
@@ -80,6 +93,8 @@ func (c *csp) isInConstraintMap(q1, q2 Queen, x1, x2 int) bool {
 	return false
 }
 
+// getCopy returns a copy of the csp to
+// reduce pointer complications.
 func (c *csp) getCopy() csp {
 	qcopy := make([]Queen, 0)
 	for i := range c.queens {
@@ -88,6 +103,7 @@ func (c *csp) getCopy() csp {
 	return csp{qcopy, c.conMap}
 }
 
+// print writes formatted csp state to the log
 func (c *csp) print(i int) {
 	log.Println("Game State: ", i)
 	log.Println("\tSize: ", len(c.queens))
@@ -111,6 +127,8 @@ func (c *csp) print(i int) {
 	}
 }
 
+// printQueens formats queen field data and
+// writes it to the log.
 func printQueens(qs []Queen) {
 	for _, q := range qs {
 		log.Println("\tQueen ", q.Col, ":")
@@ -122,14 +140,15 @@ func printQueens(qs []Queen) {
 	}
 }
 
-/*NewGame creates a csp of size n with initial queen
-placements according to map initQ*/
+// NewGame creates a csp with initial queen
+// state passed in from the view
 func NewGame(initQs []int) []byte {
 	var game = &csp{}
 	game.createQueens(initQs)
 	game.createConstraints()
-
 	solns := make([]Solution, 0)
+
+	// Early consistency check due to user input
 	if ac3(game) {
 		solns = backtrackingSearch(game)
 		log.Println("Initial State:")
@@ -145,10 +164,12 @@ func NewGame(initQs []int) []byte {
 	} else {
 		log.Println("Input is inconsistant with constraints.")
 	}
+	// Form JSON from solution structs
 	jsonData, err := json.Marshal(solns)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// Slice of solutions or empty slice
 	return jsonData
 }

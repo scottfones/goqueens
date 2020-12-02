@@ -1,13 +1,19 @@
+// backtracking search, mrv heuristic, and solution struct
+
 package game
 
 import "log"
 
+// Solution holds game state upon successful assignment of a queen.
 type Solution struct {
 	Column int
 	Value  int
 	Queens []Queen
 }
 
+// mrv returns the queen with the most constrained domain.
+// When multiple such queens exist, it works through the csp
+// from left-to-right (lowest column value first).
 func mrv(c *csp) Queen {
 	var minq Queen
 
@@ -18,11 +24,11 @@ func mrv(c *csp) Queen {
 		if q.Row != -1 {
 			continue
 
-		// If minq hasn't been assigned
+			// If minq hasn't been assigned
 		} else if minq.Row == 0 {
 			minq = q
 
-		// Update to more constrained domain
+			// Update to more constrained domain
 		} else if len(q.Domain) < len(minq.Domain) {
 			minq = q
 		}
@@ -30,6 +36,10 @@ func mrv(c *csp) Queen {
 	return minq
 }
 
+// backtrack places the most constrained queen recursively until 
+// all queens are placed, or no solution can be found. Copies of
+// the csp are used to minimize the amount of changes that would
+// need to be backed out. 
 func backtrack(c *csp, assignments []Solution) []Solution {
 	failureState := make([]Solution, 0)
 
@@ -68,6 +78,8 @@ func backtrack(c *csp, assignments []Solution) []Solution {
 	return failureState
 }
 
+// backtrackingSearch initializes the recursice backtrack function
+// by passing the csp and an empty slice of solutions
 func backtrackingSearch(c *csp) []Solution {
 	return backtrack(c, make([]Solution, 0))
 }

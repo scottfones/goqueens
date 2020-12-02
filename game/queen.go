@@ -1,6 +1,10 @@
+// Struct and methods for each queen
+
 package game
 
-/*Queen defines the fields necessary for the CSP.*/
+// Queen defines the fields necessary for the CSP.
+// `Moveable` allows the View to encode whether the
+// user restricted a queen's location.
 type Queen struct {
 	Col      int
 	Row      int
@@ -8,6 +12,7 @@ type Queen struct {
 	Domain   []int
 }
 
+// createDomain initializes each queen's domain to [1,n]
 func (q *Queen) createDomain(n int) {
 	dom := make([]int, n)
 
@@ -17,20 +22,12 @@ func (q *Queen) createDomain(n int) {
 	q.Domain = dom
 }
 
-func (q *Queen) isDomainEqual(tmpDom []int) bool {
-	if len(q.Domain) != len(tmpDom) {
-		return false
-	}
-
-	for i, x := range q.Domain {
-		if x != tmpDom[i] {
-			return false
-		}
-	}
-	return true
-}
-
+// isConflict determines whether a queen, `q2`, assigned
+// to row `r2` would be in conflict with the object queen,
+// assigned to row `r1`. Returns true if the slope connecting
+// the queens is -1, 0, or 1.
 func (q *Queen) isConflict(q2 Queen, r1, r2 int) bool {
+	// Calculate slope
 	lineFit := (float64(r1) - float64(r2)) / float64(q.Col-q2.Col)
 
 	switch lineFit {

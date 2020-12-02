@@ -1,3 +1,5 @@
+// Controller, Router, and launchpoint for webapp
+
 package main
 
 import (
@@ -49,37 +51,43 @@ func main() {
 
 }
 
+// processQSlice encodes user input for the csp.
 func processQSlice(qs []string) []int {
-	islice := []int{}
+	islice := make([]int, 0)
 	for _, s := range qs {
 		if len(s) == 0 {
+			// Empty assignments are encoded
+			// as moveable queens.
 			islice = append(islice, -1)
 
 		} else {
+			// Convert string row assignment
 			i, err := strconv.Atoi(s)
 
 			if err != nil {
 				log.Fatal(err)
 			}
-
 			islice = append(islice, i)
 		}
 	}
-
 	return islice
 }
 
+// indexHandler renders the homepage.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	index.Render(w, nil)
 }
 
+// eightSetupHandler renders the 8-queen form data.
 func eightSetupHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Loading: 8-Queens Setup")
 	eightSetup.Render(w, nil)
 }
 
+// eightDisplayHandler parses the 8-queen form data and initiates a csp.
 func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	// Collect form data
 	qslice := []string{
 		r.Form.Get("setq1"),
 		r.Form.Get("setq2"),
@@ -98,17 +106,21 @@ func eightDisplayHandler(w http.ResponseWriter, r *http.Request) {
 		nosolution.Render(w, nil)
 	} else {
 		log.Println("Loading: 8-Queens Display")
+		// Construct an interface to pass the solutions
 		eightDisplay.Render(w, map[string]string{"solns": string(solns)})
 	}
 }
 
+// twelveSetupHandler renders the 12-queen form data.
 func twelveSetupHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Loading: 12-Queens Setup")
 	twelveSetup.Render(w, nil)
 }
 
+// twelveDisplayHandler parses the 12-queen form data and initiates a csp.
 func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	// Collect form data
 	qslice := []string{
 		r.Form.Get("setq1"),
 		r.Form.Get("setq2"),
@@ -131,17 +143,21 @@ func twelveDisplayHandler(w http.ResponseWriter, r *http.Request) {
 		nosolution.Render(w, nil)
 	} else {
 		log.Println("Loading: 12-Queens Display")
+		// Construct an interface to pass the solutions
 		twelveDisplay.Render(w, map[string]string{"solns": string(solns)})
 	}
 }
 
+// sixteenSetupHandler renders the 16-queen form data.
 func sixteenSetupHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Loading: 16-Queens Setup")
 	sixteenSetup.Render(w, nil)
 }
 
+// sixteenDisplayHandler parses the 16-queen form data and initiates a csp.
 func sixteenDisplayHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
+	// Collect form data
 	qslice := []string{
 		r.Form.Get("setq1"),
 		r.Form.Get("setq2"),
@@ -168,6 +184,7 @@ func sixteenDisplayHandler(w http.ResponseWriter, r *http.Request) {
 		nosolution.Render(w, nil)
 	} else {
 		log.Println("Loading: 16-Queens Display")
+		// Construct an interface to pass the solutions
 		sixteenDisplay.Render(w, map[string]string{"solns": string(solns)})
 	}
 }

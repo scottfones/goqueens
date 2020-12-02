@@ -1,3 +1,5 @@
+// Generalizes View construction
+
 package web
 
 import (
@@ -7,6 +9,7 @@ import (
 	"path/filepath"
 )
 
+// Shortcut to layout directory
 var layoutDir string = "web/templates"
 
 // NewView prepares a view for export.
