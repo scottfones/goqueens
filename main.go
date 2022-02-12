@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"./game"
-	"./web"
+	"game"
+	"web"
 )
 
 // Define Webpages
